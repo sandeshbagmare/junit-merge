@@ -230,7 +230,10 @@ def _resolve(duplicates: list[Case], policy: DuplicatePolicy) -> list[Case]:
     if policy == "keep-worst":
         worst = max(duplicates, key=lambda c: SEVERITY.get(c.status, 0))
         return [worst]
-    raise ValueError(f"duplicate policy must be one of {', '.join(POLICIES)}")
+    # Only reachable with an unknown policy, which `merge` rejects before calling here.
+    raise ValueError(  # pragma: no cover
+        f"duplicate policy must be one of {', '.join(POLICIES)}"
+    )
 
 
 def merge(
