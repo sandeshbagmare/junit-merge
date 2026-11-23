@@ -362,3 +362,43 @@ class TestCommandLine:
         second.write_text(suite('<testcase classname="t" name="a"/>'), encoding="utf-8")
         assert self.run([str(first), str(second), "--on-duplicate", "keep-both"]) == 0
         assert "2 tests" in capsys.readouterr().out
+
+
+class TestRigour:
+    """Suite level output, element input, and the round trip through XML."""
+
+    def test_a_case_system_err_is_read(self):
+        report = parse(
+            '<testsuite><testcase name="a"><system-out>out</system-out>'
+            "<system-err>boom</system-err></testcase></testsuite>"
+        )
+        assert report.cases[0].system_err == "boom"
+        assert report.cases[0].system_out == "out"
+
+    def test_an_element_can_be_parsed(self):
+        import xml.etree.ElementTree as ET
+
+        root = ET.fromstring('<testsuite><testcase name="a"/></testsuite>')
+        assert parse(root).cases[0].name == "a"
+
+    def test_an_unknown_duplicate_policy_is_rejected(self):
+        report = parse('<testsuite><testcase name="a"/></testsuite>')
+        with pytest.raises(ValueError, match="duplicate policy"):
+            merge([report, report], on_duplicate="whatever")
+
+    def test_file_and_line_survive_the_round_trip(self):
+        report = parse(
+            '<testsuite><testcase name="a" file="t.py" line="12"/></testsuite>'
+        )
+        from junit_merge import to_xml
+
+        assert 'file="t.py"' in to_xml(report).decode("utf-8")
+        assert 'line="12"' in to_xml(report).decode("utf-8")
+
+    def test_system_err_survives_the_round_trip(self):
+        report = parse(
+            '<testsuite><testcase name="a"><system-err>trace</system-err></testcase></testsuite>'
+        )
+        from junit_merge import to_xml
+
+        assert "trace" in to_xml(report).decode("utf-8")
