@@ -39,7 +39,7 @@ __all__ = [
     "parse_file",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 #: Worst last, so ``max`` over these ranks picks the outcome that matters most.
 SEVERITY = {"passed": 0, "skipped": 1, "failure": 2, "error": 3}
