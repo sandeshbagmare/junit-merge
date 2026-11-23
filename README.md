@@ -1,30 +1,23 @@
-# junit-merge
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/junit-merge/main/assets/banner.svg" width="100%" alt="junit-merge: merge JUnit XML from every job into one honest report">
+</p>
 
-[![PyPI](https://img.shields.io/pypi/v/junit-merge.svg)](https://pypi.org/project/junit-merge/)
-[![Python](https://img.shields.io/pypi/pyversions/junit-merge.svg)](https://pypi.org/project/junit-merge/)
-[![tests](https://github.com/sandeshbagmare/junit-merge/actions/workflows/ci.yml/badge.svg)](https://github.com/sandeshbagmare/junit-merge/actions/workflows/ci.yml)
-[![license](https://img.shields.io/pypi/l/junit-merge.svg)](https://github.com/sandeshbagmare/junit-merge/blob/main/LICENSE)
+<p align="center">
+  <a href="https://pypi.org/project/junit-merge/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/junit-merge.svg"></a>
+  <a href="https://pypi.org/project/junit-merge/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/junit-merge.svg"></a>
+  <a href="https://pypi.org/project/junit-merge/"><img alt="Downloads" src="https://img.shields.io/pypi/dm/junit-merge.svg"></a>
+  <a href="https://github.com/sandeshbagmare/junit-merge/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/sandeshbagmare/junit-merge/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://github.com/sandeshbagmare/junit-merge/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/pypi/l/junit-merge.svg"></a>
+  <a href="https://sandeshbagmare.github.io/junit-merge/"><img alt="docs" src="https://img.shields.io/badge/docs-online-2ea44f.svg"></a>
+  <a href="https://pypi.org/project/junit-merge/"><img alt="zero dependencies" src="https://img.shields.io/badge/dependencies-0-2ea44f.svg"></a>
+</p>
 
-One JUnit XML file from many, with counts you can trust.
+<h3 align="center">merge JUnit XML from every job into one honest report</h3>
+<p align="center"><em>Standard library only. No runtime dependencies. Python 3.9+.</em></p>
 
-```console
-python -m junit_merge check-reports/*.xml --out junit.xml
-```
-
-```python
-from junit_merge import merge_files
-
-report = merge_files(["shard-1.xml", "shard-2.xml"], "junit.xml")
-print(report.tests, report.failures)
-```
-
-Sharded CI jobs, `pytest --junitxml` per matrix leg and retried flaky tests all leave
-you with several reports when the dashboard wants one. Concatenating the XML is
-invalid, and adding up each file's `tests` and `failures` attributes double counts
-every test a shard re-ran.
-
-This package parses the reports, rebuilds the merged document from the test cases
-themselves, and recomputes every count, so the numbers always match the contents.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/sandeshbagmare/junit-merge/main/assets/how.svg" width="720" alt="how junit-merge fits in">
+</p>
 
 ## Duplicate tests
 
